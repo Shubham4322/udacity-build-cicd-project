@@ -61,7 +61,7 @@ jobs:
 
       - name: Run test
         working-directory: ./starter/frontend
-        run: CI=true npm test -a
+        run: CI=true npm test
 
   build:
     needs: [lint, test]

@@ -1,27 +1,24 @@
-import React, { useState } from 'react';
-import MovieList from './components/MovieList';
-import MovieDetails from './components/MovieDetails';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import MovieList from './components/MovieList';
 
-export default function App() {
-  const [selectedMovie, setSelectedMovie] = useState(null);
+function App() {
+  const [movies, setMovies] = useState([]);
 
-  const handleMovieClick = (movie) => {
-    setSelectedMovie(movie);
-  };
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_MOVIE_API_URL || 'http://localhost:5000'}/movies`)
+      .then((res) => res.json())
+      .then((data) => setMovies(data.movies || []))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
-    <div className="container">
-      <h1>Movie List</h1>
-
-      <MovieList onMovieClick={handleMovieClick} />
-
-      {selectedMovie && (
-        <>
-          <h1>Movie Details</h1>
-          <MovieDetails movie={selectedMovie} />
-        </>
-      )}
+    <div className="App">
+      <header className="App-header">
+        <MovieList movies={movies} />
+      </header>
     </div>
   );
 }
+
+export default App;
