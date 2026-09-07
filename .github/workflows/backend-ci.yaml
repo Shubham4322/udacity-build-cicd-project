@@ -77,13 +77,10 @@ jobs:
     name: Build
     needs: [lint, test]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: starter/backend
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Build Docker Image
         run: |
-          docker build -t mp-backend:latest .
+          docker build -t mp-backend:latest ./starter/backend
