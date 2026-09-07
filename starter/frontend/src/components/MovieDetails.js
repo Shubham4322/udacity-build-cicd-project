@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function MovieDetail({ movie }) {
-  const [details, setDetails] = useState(null);
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_MOVIE_API_URL}/movies/${movie.id}`).then((response) => {
-      setDetails(response.data);
-    });
-  }, [movie]);
-
+const MovieDetails = ({ movie }) => {
   return (
     <div>
-      <h2>{details?.movie.title}</h2>
-      <p>{details?.movie.description}</p>
+      <h3>{movie.title}</h3>
+      <p>{movie.id}</p>
     </div>
   );
-}
+};
 
-export default MovieDetail;
+MovieDetails.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default MovieDetails;
